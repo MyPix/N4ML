@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\TreeParser">
+      <UniqueIdentifier>{385d7836-a7af-4df8-82f7-282febad53f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lexer.cpp">
@@ -23,6 +26,12 @@
     </ClCompile>
     <ClCompile Include="Source.cpp">
       <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ASTNode.cpp">
+      <Filter>Fichiers d%27en-tête\TreeParser</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeParser.cpp">
+      <Filter>Fichiers d%27en-tête\TreeParser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -35,10 +44,21 @@
     <ClInclude Include="Token.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="ASTNode.h">
+      <Filter>Fichiers d%27en-tête\TreeParser</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeParser.h">
+      <Filter>Fichiers d%27en-tête\TreeParser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Foo.txt">
       <Filter>Fichiers sources</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="F:\icon-circle.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
   </ItemGroup>
 </Project>

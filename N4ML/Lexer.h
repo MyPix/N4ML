@@ -50,5 +50,5 @@ private:
 	string curtok;
 	deque<Token> *toks = new deque<Token>;
 
-	bool isInStr;
+	bool isInStr,isInChar;
 };

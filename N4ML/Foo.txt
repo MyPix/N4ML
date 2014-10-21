@@ -1,1 +1,7 @@
-opening -> "Hello, World !"
+~"NAML V0.1"
+<tree>
+-> Current
+--> Nope ~ "Please no"
+--> Poney ~ "Animal"
+---> Reaction ~ "Holy Sh*t !"" 
+----> Go ! ~ "Reacting""

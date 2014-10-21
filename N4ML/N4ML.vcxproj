@@ -11,17 +11,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ASTNode.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Token.cpp" />
+    <ClCompile Include="TreeParser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ASTNode.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Lexer.h" />
     <ClInclude Include="Token.h" />
+    <ClInclude Include="TreeParser.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Foo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="F:\icon-circle.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{37FF16EB-B3F4-4007-BDF9-90AF436DFFCA}</ProjectGuid>

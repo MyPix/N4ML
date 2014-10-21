@@ -1,4 +1,5 @@
 #include "Lexer.h"
+#include <Windows.h>
 int tour;
 bool is_digit(string s)
 {
@@ -85,6 +86,23 @@ bool Lexer:: eatChar(string const& str, int const& pos)
 			//
 			case cTypes::quote:
 			case cTypes::apos:
+				try{
+					
+					if ((pos - 1) >= 0)
+					{
+						if (str[pos - 1] == '\\')
+						{
+							curtok.pop_back();
+							curtok += _now;
+							return eatChar(str, npos);
+						}
+					}
+					
+				}
+				catch (exception e)
+				{
+					//Nothing
+				}
 				if (isInStr)
 					{
 						curtok += '"';
@@ -475,12 +493,12 @@ void Lexer::identifity()
 			}
 			else if (alias == "}")
 			{
-				(*toks)[x].setCategory(nToken::op_cbrack);
+				(*toks)[x].setCategory(nToken::cls_cbrack);
 				continue;
 			}
 			else if (alias == "{")
 			{
-				(*toks)[x].setCategory(nToken::cls_cbrack);
+				(*toks)[x].setCategory(nToken::op_cbrack);
 				continue;
 			}
 			else if (alias == "[")
@@ -515,6 +533,56 @@ void Lexer::identifity()
 			// Nothing to do !
 		}
 	}
+	if (((*toks)[0].getCategory() == nToken::tilde) && ((*toks)[1].getCategory() != nToken::word))
+	{
+		string x = (*toks)[1].getContent();
+		if (x[0] == '"')
+			x = (*toks)[1].getContent().substr(1, (x.length() - 1));
+		if (x[x.length()] == '"')
+			x = (*toks)[1].getContent().substr(0, (x.length() - 1));
+		size_t kz = x.find('V');
+		size_t mz = x.find('v');
+		string substr;
+		if (x.substr(0,4) == "NAML")
+		{
+
+			if (kz != string::npos)
+			{
+				substr = x.substr(kz, (x.length() - kz -1));
+				cout << "Current document is validated ! Recognized NAML Version is: " << substr << endl;
+				toks->pop_front(); // ~
+				toks->pop_front(); // "NAML V**"
+			}
+			else if (mz != string::npos)
+			{
+				substr = x.substr(mz, (x.length() - mz -1));
+				cout << "Current document is validated ! Recognized NAML Version is: " << substr << endl;
+				toks->pop_front(); // ~
+				toks->pop_front(); // "NAML v**"
+			}
+			else
+			{
+				cout << "Current document is validated ! No NAML Version recognized :/" << endl;
+			}
+		}
+		else
+		{
+			cout << x.substr(0, 4) << endl;
+			cout << "A NAML DOCUMENT MUST BEGIN WITH ~\"NAML V(version)\"!!";
+			Sleep(2000);
+			exit(-1);
+		}
+			
+	}
+	else
+	{
+		cout << "---" << endl;
+		cout << (*toks)[0].getLiteralCategory() << endl;
+		cout << (*toks)[1].getLiteralCategory() << endl;
+		cout << "A NAML DOCUMENT MUST BEGIN WITH ~\"NAML V(version)\"!!";
+		Sleep(2000);
+		exit(-1);
+	}
 }
 bool Lexer::readFromFile(string const& filepath,unsigned int const& buffsize) 
 {
@@ -522,15 +590,17 @@ bool Lexer::readFromFile(string const& filepath,unsigned int const& buffsize)
 	char *buffer = new char[buffsize];
 	stream.rdbuf()->pubsetbuf(buffer, buffsize);
 	stream.open(filepath);
+	
 	if(stream)
 	{
+
 		string code, temp;
-		while (getline(stream, temp))
+		while (getline(stream,temp))
 		{
-			code += temp;
-			temp = "";
+			eatChar(temp, 0);
 		}
-		return eatChar(code, 0);
+		return 1;
+
 	}
 	else
 	{

@@ -1,31 +1,52 @@
 #include <iostream>
 #include <deque>
+#include <windows.h>
+#include <sstream>
 #include "Lexer.h"
 #include "Token.h"
+#include "TreeParser.h"
 int main(char *argv[], int argc)
 {
 	Lexer lex;
 	deque<Token>* dq = lex.returnTkDqPtr();
-	lex.eatChar("-->DQ @",0);
-	lex.identifity();
-	cout << "dqsize " << dq->size() << endl;
-	for (int x(0); x < dq->size(); x++)
+	if (argc == 1)
 	{
-		cout << " = " << (*dq)[x].getContent() << " = "  << (*dq)[x].getLiteralCategory()<< endl;
-	}
-	lex.clearDq();
-	if (lex.readFromFile("C:\\Users\\Pierre v\\Documents\\Visual Studio 2013\\Projects\\N4ML\\N4ML\\Foo.txt", nBUFFER_XS))
-	{
-		lex.identifity();
-		cout << "dqsize " << dq->size() << endl;
-		for (int x(0); x < dq->size(); x++)
+		if (lex.readFromFile(argv[0],nBUFFER_M))
 		{
-			cout << " = " << (*dq)[x].getContent() << " = " << (*dq)[x].getLiteralCategory() << endl;
+			try{
+				lex.identifity();
+			}
+			catch (exception e)
+			{
+				cout << e.what();
+			}
+			cout << "Taille de la Deque : " << dq->size() << endl;
+			for (int x(0); x < dq->size(); x++)
+			{
+				cout << " JETON > '" << (*dq)[x].getContent() << "' > TYPE > '" << (*dq)[x].getLiteralCategory() << "';" << endl;
+			}
+		}
+		else
+		{
+			cout << "Impossible d'ouvrir le fichier :c";
 		}
 	}
 	else
 	{
-		cout << "Unable to open file";
+		if (lex.readFromFile("Foo.txt", 24250))
+		{
+			lex.identifity();
+			cout << "Taille de la Deque : " << dq->size() << endl;
+			for (int x(0); x < dq->size(); x++)
+			{
+				cout << " JETON > '" << (*dq)[x].getContent() << "' > TYPE > '" << (*dq)[x].getLiteralCategory() << "';" << endl;
+			}
+			TreeParser p(dq);
+		}
+		else
+		{
+			cout << "Impossible d'ouvrir le fichier :c";
+		}
 	}
 	cin.get();
 }
